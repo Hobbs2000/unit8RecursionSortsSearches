@@ -2,8 +2,10 @@ import javax.swing.JFrame;
 
 public class TreeViewer extends JFrame
 {
-    private final int HEIGHT = 600;
-    private final int WIDTH = 800;
+    private final int HEIGHT = 1080;
+    private final int WIDTH = 1900;
+    
+    private TreePanel drawer;
     
     public TreeViewer()
     {
@@ -11,11 +13,15 @@ public class TreeViewer extends JFrame
         this.setSize(WIDTH, HEIGHT);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
+        drawer = new TreePanel(20, 700, 900, 700, 900);
+        this.add(drawer);
+        
         this.setVisible(true);
     }
     
     public static void main(String[] args)
     {
         JFrame frame = new TreeViewer();
+        frame.repaint();
     }
 }
