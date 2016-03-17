@@ -2,6 +2,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.JScrollBar;
+import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.AdjustmentListener;
@@ -21,6 +22,7 @@ public class TreeViewer extends JFrame
     private JButton decrease;
     private JScrollBar editAngle;
     private JScrollBar shiftAngle;
+    private JTextField editLength;
     
     private JButton stopper;
     private boolean looping = true;
@@ -54,6 +56,9 @@ public class TreeViewer extends JFrame
         shiftAngle.setUnitIncrement(1);
         shiftAngle.addAdjustmentListener(new ScrollListener());
         holder.add(shiftAngle);
+        
+        editLength = new JTextField();
+        holder.add(editLength);
         
         stopper = new JButton("Stop");
         stopper.addActionListener(new ClickListener());
