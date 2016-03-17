@@ -12,6 +12,7 @@ public class TreePanel extends JPanel
     private int topX, topY;
     private int botX, botY;
     private int angle = 0;
+    private int angleShift = 0;
     
     public TreePanel(int startOrder, int x1, int y1, int x2, int y2)
     {
@@ -39,17 +40,22 @@ public class TreePanel extends JPanel
         angle = newAngle;
     }
     
+    public void setAngleShift(int shift)
+    {
+        angleShift = shift;
+    }
+    
     
     public void paintComponent(Graphics g)
     {
         
         g.setColor(Color.RED);
         
-        draw(g, order, topX, topY, 0, angle, 100, 0.618);
+        draw(g, order, topX, topY, 0, angle, angleShift, 20, 0.618);
     }
    
     
-    public void draw(Graphics g, int order, int x1, int y1, double angle, double angleChange, double length, double multiplier) 
+    public void draw(Graphics g, int order, int x1, int y1, double angle, double angleChange, double angleShift, double length, double multiplier) 
     {
         int x2, y2, x3, y3; 
 
@@ -62,18 +68,14 @@ public class TreePanel extends JPanel
         else
         {
            
-            
+            x2 = (x1 - (int)Math.round(Math.sin(newAngle) * order * length * multiplier));
 
-            x2 = (x1 - (int)Math.round(Math.sin(newAngle) * multiplier * length));
-            System.out.println("x:"+x2);
+            y2 = (y1 - (int)Math.round(Math.cos(newAngle) * order * length * multiplier));
 
-            y2 = (y1 - (int)Math.round(Math.cos(newAngle) * multiplier * length));
-            System.out.println("y:"+y2);
-            
             g.drawLine(x1, y1, x2, y2);
             
-            draw(g, order-1, x2, y2, angle + angleChange, angleChange, length, multiplier);
-            draw(g, order-1, x2, y2, angle - angleChange, angleChange, length, multiplier);
+            draw(g, order-1, x2, y2, (angle + angleChange + angleShift), angleChange, angleShift, length, multiplier);
+            draw(g, order-1, x2, y2, (angle + angleChange - angleShift), angleChange, angleShift, length, multiplier);
         }
     }
 }

@@ -20,6 +20,10 @@ public class TreeViewer extends JFrame
     private JButton increase;
     private JButton decrease;
     private JScrollBar editAngle;
+    private JScrollBar shiftAngle;
+    
+    private JButton stopper;
+    private boolean looping = true;
     
     public TreeViewer()
     {
@@ -40,17 +44,70 @@ public class TreeViewer extends JFrame
         editAngle = new JScrollBar();
         editAngle.setMinimum(0);
         editAngle.setMaximum(360);
-        editAngle.setUnitIncrement(10);
+        editAngle.setUnitIncrement(1);
         editAngle.addAdjustmentListener(new ScrollListener());
         holder.add(editAngle);
         
+        shiftAngle = new JScrollBar();
+        shiftAngle.setMinimum(0);
+        shiftAngle.setMaximum(360);
+        shiftAngle.setUnitIncrement(1);
+        shiftAngle.addAdjustmentListener(new ScrollListener());
+        holder.add(shiftAngle);
         
-        drawer = new TreePanel(order, 700, 1000, 700, 1000);
+        stopper = new JButton("Stop");
+        stopper.addActionListener(new ClickListener());
+        holder.add(stopper);
+        
+        drawer = new TreePanel(order, 700, 1000, 700, 700);
         holder.add(drawer);
         
         this.add(holder);
         
         this.setVisible(true);
+        
+        loop();
+    }
+    
+    public void loop()
+    {
+        int scroll_1 = 0;
+        int scroll_2 = 0;
+        while (looping == true)
+        {
+            try
+            {
+                Thread.sleep(50);
+            }
+            catch (InterruptedException e)
+            {
+                e.printStackTrace();
+            }
+            
+            if (scroll_1 >= 360)
+            {
+                scroll_1 = 0;
+            }
+            else
+            {
+                scroll_1+=2;
+                editAngle.setValue(scroll_1);
+                drawer.setAngle(scroll_1);
+            }
+            
+            if (scroll_2 >= 360)
+            {
+                scroll_2 = 0;
+            }
+            else
+            {
+                scroll_2++;
+                shiftAngle.setValue(scroll_2);
+                drawer.setAngleShift(scroll_2);
+            }
+            
+            repaint();
+        }
     }
     
     public static void main(String[] args)
@@ -58,6 +115,7 @@ public class TreeViewer extends JFrame
         JFrame frame = new TreeViewer();
         frame.setBackground(Color.WHITE);
         frame.repaint();
+        
     }
     
     public class ClickListener implements ActionListener
@@ -70,11 +128,15 @@ public class TreeViewer extends JFrame
                 drawer.setOrder(order);
                 repaint();
             }
-            else
+            else if (event.getSource() == decrease)
             {
                 order--;
                 drawer.setOrder(order);
                 repaint();
+            }
+            else if (event.getSource() == stopper)
+            {
+                looping = false;
             }
         }
     }
@@ -83,12 +145,19 @@ public class TreeViewer extends JFrame
     {
         public void adjustmentValueChanged(AdjustmentEvent e)
         {
-            int newAngle = e.getValue();
-            System.out.println("New Angle:"+newAngle);
-            drawer.setAngle(newAngle);
-            repaint();
+            if (e.getSource() == editAngle)
+            {
+                int newAngle = e.getValue();
+                drawer.setAngle(newAngle);
+                repaint();
+            }
+            else
+            {
+                int shiftAngle = e.getValue();
+                drawer.setAngleShift(shiftAngle);
+                repaint();
+            }
         }
     }
     
-    
-}
+    }
