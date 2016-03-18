@@ -20,6 +20,7 @@ public class TreeViewer extends JFrame
     private JPanel holder;
     private JButton increase;
     private JButton decrease;
+    private JScrollBar length;
     private JScrollBar editAngle;
     private JScrollBar shiftAngle;
     private JTextField editLength;
@@ -57,12 +58,22 @@ public class TreeViewer extends JFrame
         shiftAngle.addAdjustmentListener(new ScrollListener());
         holder.add(shiftAngle);
         
+        length = new JScrollBar();
+        length.setMinimum(0);
+        length.setMaximum(1000);
+        length.setUnitIncrement(1);
+        length.addAdjustmentListener(new ScrollListener());
+        holder.add(length);
+        
+        
         editLength = new JTextField();
         holder.add(editLength);
         
         stopper = new JButton("Stop");
         stopper.addActionListener(new ClickListener());
         holder.add(stopper);
+        
+        
         
         drawer = new TreePanel(order, 700, 1000, 700, 700);
         holder.add(drawer);
@@ -156,10 +167,16 @@ public class TreeViewer extends JFrame
                 drawer.setAngle(newAngle);
                 repaint();
             }
-            else
+            else if (e.getSource() == shiftAngle)
             {
                 int shiftAngle = e.getValue();
                 drawer.setAngleShift(shiftAngle);
+                repaint();
+            }
+            else
+            {
+                int newLength = e.getValue();
+                drawer.setLength(newLength);
                 repaint();
             }
         }

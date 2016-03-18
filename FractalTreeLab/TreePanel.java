@@ -14,7 +14,8 @@ public class TreePanel extends JPanel
     private int botX, botY;
     private int angle = 0;
     private int angleShift = 0;
-    private double multiplier = 0.9;
+    private double multiplier = 0.8;
+    private int length = 20;
     
     private Random numGen;
     public TreePanel(int startOrder, int x1, int y1, int x2, int y2)
@@ -50,13 +51,18 @@ public class TreePanel extends JPanel
         angleShift = shift;
     }
     
+    public void setLength(int newLength)
+    {
+        length = newLength;
+    }
+    
     
     public void paintComponent(Graphics g)
     {
         
         g.setColor(Color.RED);
         
-        draw(g, order, topX, topY, 0, angle, angleShift, 20, multiplier);
+        draw(g, order, topX, topY, 0, angle, angleShift, length, multiplier);
     }
    
     
