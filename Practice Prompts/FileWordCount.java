@@ -16,26 +16,33 @@ public class FileWordCount
         try
         {
             File file = new File(filePath+".txt");
-            fileIn = new Scanner(file);
             
-            int count = 0;
+            fileIn = new Scanner(file);/*.useDelimiter("");/*The delimiter is either
+                                                                   whitespace or a comma*/
+                                                                 
+            /*fileIn.useDelimiter("[^A-Za-z0-9\\s]+"); /*This classifies anything that is not
+                                                      a letter, number or whitspace as a 
+                                                      delimiter*/
+            fileIn.useDelimiter("[.!?]+");
+            
+            int Wcount = 0;
+            int Ccount = 0;
             
             System.out.println("Text read from document:");
-            while (fileIn.hasNext())
+            while (fileIn.hasNext())//Will loop if the scanner has more things it can read in
             {
-                count++;
-                System.out.print(fileIn.next()+" ");
+                String text = fileIn.next(); //Read in the text
+                Wcount++;                    //Add one to the total word count
+                Ccount += text.length();     //Add the text length to the total char count
+                System.out.print("\n"+text);
             }
-            System.out.println("\nThere are "+count+" words in that document");
+            System.out.println("\nWords: "+Wcount);
+            System.out.println("Chars: "+Ccount);
             
         }
         catch (FileNotFoundException e)
         {
             System.err.println("File named: "+filePath+", does not exist or cannot be found");
-        }
-        finally
-        {
-            fileIn.close();
         }
     }
 }
