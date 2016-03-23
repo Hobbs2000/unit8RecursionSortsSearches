@@ -18,8 +18,8 @@ public class FileWordCount
             File file = new File(filePath+".txt");
             
             fileIn = new Scanner(file);/*.useDelimiter("");/*The delimiter is either
-                                                                   whitespace or a comma*/
-                                                                 
+                                                            whitespace or a comma*/
+                                                 
             /*fileIn.useDelimiter("[^A-Za-z0-9\\s]+"); /*This classifies anything that is not
                                                       a letter, number or whitspace as a 
                                                       delimiter*/
@@ -31,9 +31,16 @@ public class FileWordCount
             System.out.println("Text read from document:");
             while (fileIn.hasNext())//Will loop if the scanner has more things it can read in
             {
+                
                 String text = fileIn.next(); //Read in the text
-                Wcount++;                    //Add one to the total word count
-                Ccount += text.length();     //Add the text length to the total char count
+                Scanner readText = new Scanner(text).useDelimiter("[\\s,]+");
+                while(readText.hasNext()) //Goes through the line and gets each word
+                {
+                     String word = readText.next();
+                     Wcount++;                    //Add one to the total word count
+                     Ccount += word.length();     //Add the text length to the total char count
+                }
+                
                 System.out.print("\n"+text);
             }
             System.out.println("\nWords: "+Wcount);
