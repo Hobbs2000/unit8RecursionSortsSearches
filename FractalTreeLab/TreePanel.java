@@ -15,8 +15,8 @@ public class TreePanel extends JPanel
     private int botX, botY;
     private int angle = 0;
     private int angleShift = 0;
-    private double multiplier = 0.7;
-    private double length = 20;
+    private double multiplier = 0.9;
+    private double length = 100;
     
     private Random numGen;
     public TreePanel(int startOrder, int x1, int y1, int x2, int y2)
