@@ -1,5 +1,6 @@
 import javax.swing.JPanel;
 import java.awt.Graphics;
+import java.awt.Graphics;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.util.Random;
@@ -14,8 +15,8 @@ public class TreePanel extends JPanel
     private int botX, botY;
     private int angle = 0;
     private int angleShift = 0;
-    private double multiplier = 0.8;
-    private int length = 20;
+    private double multiplier = 0.7;
+    private double length = 20;
     
     private Random numGen;
     public TreePanel(int startOrder, int x1, int y1, int x2, int y2)
@@ -30,7 +31,7 @@ public class TreePanel extends JPanel
         
         numGen = new Random();
         
-        this.setBackground(Color.BLACK);
+        //this.setBackground(Color.BLACK);
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
     }
     
@@ -53,7 +54,7 @@ public class TreePanel extends JPanel
     
     public void setLength(int newLength)
     {
-        length = newLength;
+        length = newLength ;
     }
     
     
@@ -72,26 +73,28 @@ public class TreePanel extends JPanel
 
         double newAngle = Math.toRadians(angle); //Get degrees in radians
         
+        //Get a random color value
         int r_val = numGen.nextInt(254);
         int g_val = numGen.nextInt(254);
         int b_val = numGen.nextInt(254);
         g.setColor(new Color(r_val, g_val, b_val));
-        
-        
-        if (order == 1)
+
+        if ((order == 1)) //|| (x1 > WIDTH) || (x1 < 0) || (y1 > HEIGHT) || (y1 < 0))
         {
             return;
         }
         else
         {  
-            x2 = (x1 - (int)Math.round(Math.sin(newAngle) * order * length));
-
-            y2 = (y1 - (int)Math.round(Math.cos(newAngle) * order * length));
-
+            //Calculate coordinates for new line
+            x2 = (x1 - (int)Math.round(Math.sin(newAngle) *  length));
+            y2 = (y1 - (int)Math.round(Math.cos(newAngle) * length));
+            
             g.drawLine(x1, y1, x2, y2);
             
+            //Start 2 more branches
             draw(g, order-1, x2, y2, (angle + angleChange + angleShift), angleChange, angleShift, length*multiplier, multiplier);
             draw(g, order-1, x2, y2, (angle + angleChange - angleShift), angleChange, angleShift, length*multiplier, multiplier);
+            
         }
     }
 }
