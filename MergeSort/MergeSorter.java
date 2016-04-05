@@ -8,11 +8,13 @@ public class MergeSorter
       Sorts an array, using merge sort.
       @param a the array to sort
    */
-   public static void sort(int[] a)
+   public static void sort(String[] a)
    {  
       if (a.length <= 1) { return; }
-      int[] first = new int[a.length / 2];
-      int[] second = new int[a.length - first.length];
+      //int[] first = new int[a.length / 2];
+      //int[] second = new int[a.length - first.length];
+      String[] first = new String[a.length / 2];
+      String[] second = new String[a.length - first.length];
       // Copy the first half of a into first, the second half into second
       for (int i = 0; i < first.length; i++) 
       { 
@@ -33,7 +35,7 @@ public class MergeSorter
       @param second the second sorted array
       @param a the array into which to merge first and second
    */
-   private static void merge(int[] first, int[] second, int[] a)
+   private static void merge(String[] first, String[] second, String[] a)
    {  
       int iFirst = 0; // Next element to consider in the first array
       int iSecond = 0; // Next element to consider in the second array
@@ -43,7 +45,7 @@ public class MergeSorter
       // the smaller element into a
       while (iFirst < first.length && iSecond < second.length)
       {  
-         if (first[iFirst] < second[iSecond])
+         if (first[iFirst].compareTo(second[iSecond]) < 0)
          {  
             a[j] = first[iFirst];
             iFirst++;
